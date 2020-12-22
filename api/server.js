@@ -16,7 +16,7 @@ server.use(helmet())
 server.use("/api/auth", AuthRouter)
 server.use("/api/tickets", isAuthorized, TicketsRouter)
 server.use("/api/comments", isAuthorized, CommentsRouter)
-server.use("/api/upvotes", isAuthorized, UpvotesRouter)
+server.use("/api/upvotes", UpvotesRouter)
 
 server.get("/", (req, res) => {
   res.status(200).json("You have reached the Community Concerns Server, Welcome!")
