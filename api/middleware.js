@@ -19,7 +19,7 @@ const isAuthorized = (req, res, next) => {
   }
 }
 
-const validLoginRequest = async (req, res, next) => {
+const validRegisterRequest = async (req, res, next) => {
   if(!req.body.email || !req.body.password) {
     res.status(401).json("email and password required")
   } else {
@@ -34,5 +34,5 @@ const validLoginRequest = async (req, res, next) => {
 
 module.exports = {
   isAuthorized,
-  validLoginRequest
+  validRegisterRequest
 }

@@ -2,10 +2,10 @@ const router = require("express").Router()
 const bcryptjs = require("bcryptjs")
 const Auth = require("./auth-model")
 const { makeToken } = require("./auth-helpers")
-const { isValid } = require("../middleware")
+const { validRegisterRequest } = require("../middleware")
 
 
-router.post("/register", isValid, async (req, res) => {
+router.post("/register", validRegisterRequest, async (req, res) => {
   const credentials = req.body
   const rounds = 10
   const hash = bcryptjs.hashSync(credentials.password, rounds)
