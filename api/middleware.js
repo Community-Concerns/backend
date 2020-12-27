@@ -5,7 +5,6 @@ const Upvotes = require("./upvotes/upvotes-model")
 
 const isAuthorized = (req, res, next) => {
   const token = req.headers.authorization
-
   if(!token) {
     res.status(401).json("token required")
   } else {
@@ -21,8 +20,8 @@ const isAuthorized = (req, res, next) => {
 }
 
 const validRegisterRequest = async (req, res, next) => {
-  if(!req.body.email || !req.body.username || !req.body.password || !req.body.zipcode) {
-    res.status(401).json({ message: "email, username, zipcode and password required" })
+  if(!req.body.email || !req.body.password || !req.body.zipcode) {
+    res.status(401).json("email and password required")
   } else {
     const checkExists = await Auth.getUserByEmail(req.body.email)
     if(checkExists.length > 0) {
@@ -56,9 +55,33 @@ const validateUpvoteDoesNotExists = async (req, res, next) => {
   }
 }
 
+
+
+
+
+
+
+
+// Comments/Tickets middleware
+
+const accessToDetails = async (req, res, next) => {
+
+  try {
+    const { subject, email, zipcode } = req.decodedToken; 
+    req.userId = subject; 
+    req.email = email; 
+    req.zipcode = zipcode; 
+
+    next(); 
+  }
+  catch(e){
+    res.status(500).send(e.message); 
+  }
+
+}
+
 module.exports = {
   isAuthorized,
-  validRegisterRequest,
-  validateUpvoteExists,
-  validateUpvoteDoesNotExists
+  validRegisterRequest, 
+  accessToDetails
 }
