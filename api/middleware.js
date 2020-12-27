@@ -55,33 +55,24 @@ const validateUpvoteDoesNotExists = async (req, res, next) => {
   }
 }
 
-
-
-
-
-
-
-
 // Comments/Tickets middleware
-
 const accessToDetails = async (req, res, next) => {
-
   try {
     const { subject, email, zipcode } = req.decodedToken; 
     req.userId = subject; 
     req.email = email; 
     req.zipcode = zipcode; 
-
     next(); 
   }
   catch(e){
     res.status(500).send(e.message); 
   }
-
 }
 
 module.exports = {
   isAuthorized,
   validRegisterRequest, 
-  accessToDetails
+  accessToDetails,
+  validateUpvoteExists,
+  validateUpvoteDoesNotExists
 }
