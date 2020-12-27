@@ -2,11 +2,14 @@
 exports.up = function(knex) {
   return knex.schema.createTable("users", tbl => {
     tbl.increments("id"); 
+    tbl.string("username", 50).notNullable()
     tbl.string("email", 255).notNullable().unique(); 
     tbl.string("password", 255).notNullable(); 
+    tbl.string("zipcode", 5).notNullable()
+
   })
   .createTable("tickets", tbl => {
-    tbl.increments("id"); 
+    tbl.increments("id")
     tbl.integer("user_id")
     .unsigned()
     .notNullable()
@@ -14,6 +17,7 @@ exports.up = function(knex) {
     .inTable("users"); 
     tbl.string("title", 255).notNullable(); 
     tbl.string("description", 255).notNullable(); 
+    tbl.string("zipcode", 5).notNullable()
 
   })
   .createTable("ticket_upvotes", tbl => {
@@ -37,7 +41,8 @@ exports.up = function(knex) {
     .unsigned()
     .notNullable()
     .references("id")
-    .inTable("tickets");
+    .inTable("tickets")
+    .onDelete("CASCADE")
     tbl.integer("user_id")
     .unsigned()
     .notNullable()

@@ -25,6 +25,7 @@ router.post("/login", async (req, res) => {
     const [user] = await Auth.getUserByEmail(req.body.email)
     if(user && bcryptjs.compareSync(req.body.password, user.password)) {
       const token = makeToken(user)
+      
       res.status(200).json({
         message: `welcome, ${user.email}`,
         token

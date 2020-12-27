@@ -6,6 +6,7 @@ function makeToken(user) {
   const payload = {
     subject: user.id,
     email: user.email,
+    zipcode: user.zipcode
   }
   const options = {
     expiresIn: '900s',
