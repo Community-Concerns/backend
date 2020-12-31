@@ -17,6 +17,7 @@ exports.up = function(knex) {
     tbl.string("title", 255).notNullable(); 
     tbl.string("description", 255).notNullable(); 
     tbl.string("zipcode", 5).notNullable()
+    tbl.string("image")
   })
   .createTable("ticket_upvotes", tbl => {
     tbl.increments("id"); 

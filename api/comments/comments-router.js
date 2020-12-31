@@ -4,7 +4,20 @@ const Comment = require("./comments-model");
 // middlewares
 const { accessToDetails } = require("../middleware"); 
 
-//creating a comment to a specific ticket, and addding comment to comment db
+// get specific comments by ticket
+router.get("/:id", async (req, res) => {
+  try {
+      const ticketId = req.params.id; 
+      const comments = await Comment.getTicketComments(ticketId); 
+      if(!comments) return res.status(400).json("No comments available"); 
+      res.status(200).send(comments); 
+  }
+  catch(e){
+      res.status(500).send(e.message); 
+  }
+})
+
+//creating a comment to a specific ticket, and adding comment to comment db
 router.post("/:id", accessToDetails, async (req, res) => {    
     try {
         const { comment } = req.body; 
@@ -12,19 +25,6 @@ router.post("/:id", accessToDetails, async (req, res) => {
         const newComment = { comment, ticket_id: Number(req.params.id), user_id: req.userId }
         const insertedComment = await Comment.create(newComment);
         res.status(201).send(insertedComment); 
-    }
-    catch(e){
-        res.status(500).send(e.message); 
-    }
-})
-
-// get specific comments by ticket
-router.get("/:id", async (req, res) => {
-    try {
-        const ticketId = req.params.id; 
-        const comments = await Comment.getTicketComments(ticketId); 
-        if(!comments) return res.status(400).json("No comments available"); 
-        res.status(200).send(comments); 
     }
     catch(e){
         res.status(500).send(e.message); 

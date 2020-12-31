@@ -43,10 +43,10 @@ const validateUpvoteExists = async (req, res, next) => {
 }
 
 const validateUpvoteDoesNotExists = async (req, res, next) => {
-  if(!req.body.user_id || !req.body.ticket_id) {
-    res.status(401).json({ message: "You must include a user_id and ticket_id in body request"})
+  if(!req.body.ticket_id) {
+    res.status(401).json({ message: "You must include a ticket_id in body request"})
   } else {
-    const checkExists = await Upvotes.getUpvoteWithUserAndTicketId(req.body)
+    const checkExists = await Upvotes.getUpvoteWithUserAndTicketId(req.decodedToken.subject, req.body.ticket_id)
     if(checkExists.length > 0) {
       res.status(401).json({ message: "This upvote already exists" })
     } else {

@@ -1,5 +1,13 @@
 const db = require("../../database/dbConfig")
 
+function getUpvotes() {
+  return db("ticket_upvotes")
+}
+
+function getUserUpvotes(user_id) {
+  return db("ticket_upvotes").where({ user_id })
+}
+
 async function addUpvote(upvote) {
   try {
     const id = await db("ticket_upvotes").insert(upvote)
@@ -19,17 +27,14 @@ async function deleteUpvote(id) {
   } 
 }
 
-function getUpvote(id) {
-  return db("ticket_upvotes").where({ id })
-}
-
-function getUpvoteWithUserAndTicketId(upvote) {
-  return db("ticket_upvotes").where({ user_id: upvote.user_id, ticket_id: upvote.ticket_id })
+function getUpvoteWithUserAndTicketId(user_id, ticket_id) {
+  return db("ticket_upvotes").where({ user_id, ticket_id })
 }
 
 module.exports = {
   addUpvote,
   deleteUpvote,
-  getUpvote,
+  getUpvotes,
+  getUserUpvotes,
   getUpvoteWithUserAndTicketId
 }

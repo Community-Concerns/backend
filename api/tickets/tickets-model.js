@@ -16,7 +16,7 @@ async function create(ticket){
     const newTicket = await db("tickets").insert(ticket); // this is an id
     return db("tickets as t")
     .join("users as u", "t.user_id", "u.id")
-    .select("u.username as created_by_user", "t.title", "t.description", "t.zipcode")
+    .select("u.username as created_by_user", "t.title", "t.description", "t.zipcode", "t.image")
     .where("t.id", newTicket).first(); 
 }
 

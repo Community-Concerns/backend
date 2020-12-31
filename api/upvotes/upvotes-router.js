@@ -2,8 +2,28 @@ const router = require("express").Router()
 const Upvotes = require("./upvotes-model")
 const { validateUpvoteExists, validateUpvoteDoesNotExists } = require("../middleware")
 
-router.post("/upvote", validateUpvoteDoesNotExists, async (req, res) => {
+
+router.get("/", async (req, res) => {
   try {
+    const upvotes = await Upvotes.getUpvotes()
+    res.status(201).json(upvotes)
+  } catch (error) {
+    res.status(500).json({ message: "Unable to get upvotes"})
+  }
+})
+
+router.get("/my_upvotes", async (req, res) => {
+  try {
+    const upvotes = await Upvotes.getUserUpvotes(req.decodedToken.subject)
+    res.status(201).json(upvotes)
+  } catch (error) {
+    res.status(500).json({ message: "Unable to get upvotes"})
+  }
+})
+
+router.post("/", validateUpvoteDoesNotExists, async (req, res) => {
+  try {
+    req.body.user_id = req.decodedToken.subject
     const upvote = await Upvotes.addUpvote(req.body)
     res.status(201).json(upvote)
   } catch (error) {
@@ -11,7 +31,7 @@ router.post("/upvote", validateUpvoteDoesNotExists, async (req, res) => {
   }
 })
 
-router.delete("/upvote/:id", validateUpvoteExists, async (req, res) => {
+router.delete("/:id", validateUpvoteExists, async (req, res) => {
   const { id } = req.params
   try {
     const deletedUpvote = await Upvotes.deleteUpvote(id)

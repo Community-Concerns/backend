@@ -9,14 +9,15 @@ const { isAuthorized } = require("./middleware")
 
 const server = express()
 
-server.use(express.json())
+server.use(express.json({ limit: "50mb" }))
+server.use(express.urlencoded({ limit: "50mb", extended: true }))
 server.use(cors())
 server.use(helmet())
 
 server.use("/api/auth", AuthRouter)
 server.use("/api/tickets", isAuthorized, TicketsRouter)
 server.use("/api/comments", isAuthorized, CommentsRouter)
-server.use("/api/upvotes", UpvotesRouter)
+server.use("/api/upvotes", isAuthorized, UpvotesRouter)
 
 server.get("/", (req, res) => {
   res.status(200).json("You have reached the Community Concerns Server, Welcome!")
