@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken")
 const { jwtSecret } = require("../secret")
 const Auth = require("./auth/auth-model")
+const Upvotes = require("./upvotes/upvotes-model")
 
 const isAuthorized = (req, res, next) => {
   const token = req.headers.authorization
@@ -24,40 +25,54 @@ const validRegisterRequest = async (req, res, next) => {
   } else {
     const checkExists = await Auth.getUserByEmail(req.body.email)
     if(checkExists.length > 0) {
-      res.status(401).json("email taken")
+      res.status(401).json({ message: "email taken" })
     } else {
       next()
     }
   }
 }
 
+const validateUpvoteExists = async (req, res, next) => {
+  const { id } = req.params
+  const checkExists = await Upvotes.getUpvote(id)
+  if(checkExists.length > 0) {
+    next()
+  } else {
+    res.status(401).json({ message: "This upvote id does not exist" })
+  }
+}
 
-
-
-
-
-
+const validateUpvoteDoesNotExists = async (req, res, next) => {
+  if(!req.body.ticket_id) {
+    res.status(401).json({ message: "You must include a ticket_id in body request"})
+  } else {
+    const checkExists = await Upvotes.getUpvoteWithUserAndTicketId(req.decodedToken.subject, req.body.ticket_id)
+    if(checkExists.length > 0) {
+      res.status(401).json({ message: "This upvote already exists" })
+    } else {
+      next()
+    }
+  }
+}
 
 // Comments/Tickets middleware
-
 const accessToDetails = async (req, res, next) => {
-
   try {
     const { subject, email, zipcode } = req.decodedToken; 
     req.userId = subject; 
     req.email = email; 
     req.zipcode = zipcode; 
-
     next(); 
   }
   catch(e){
     res.status(500).send(e.message); 
   }
-
 }
 
 module.exports = {
   isAuthorized,
   validRegisterRequest, 
-  accessToDetails
+  accessToDetails,
+  validateUpvoteExists,
+  validateUpvoteDoesNotExists
 }
