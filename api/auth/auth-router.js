@@ -60,8 +60,4 @@ router.post("/login", async (req, res) => {
   }
 })
 
-router.delete("/delete-user/:id", async (req, res) => {
-  
-})
-
 module.exports = router
