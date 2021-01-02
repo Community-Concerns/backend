@@ -20,9 +20,7 @@ router.post("/register", validRegisterRequest, async (req, res) => {
   credentials.password = hash
   try {
     const newUser = await Auth.addUser(credentials)
-    if(newUser) {
-      console.log(transporter)
-      console.log(transporter.sendMail)
+    if (newUser) {
       const mailOptions = {
         from: 'communityconcernsapp@gmail.com',
         to: credentials.email,
@@ -32,11 +30,13 @@ router.post("/register", validRegisterRequest, async (req, res) => {
       
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.log(error);
+          console.log(error)
         } else {
-          console.log('Email sent: ' + info.response);
+          console.log(`Email sent: ${info.response}`)
         }
-      });
+      })
+    } else {
+      res.status(500).json("Unable to add user")
     }
     res.status(201).json(newUser)
   } catch (error) {
