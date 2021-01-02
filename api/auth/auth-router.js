@@ -36,10 +36,11 @@ router.post("/register", validRegisterRequest, async (req, res) => {
           console.log(`Email sent: ${info.response}`)
         }
       })
+      res.status(201).json(newUser)
     } else {
       res.status(500).json("Unable to add user")
     }
-    res.status(201).json(newUser)
+    
   } catch (error) {
     res.status(500).json({ error: error.lineNumber, message: error.message, stack: error.stack })
   }
