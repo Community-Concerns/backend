@@ -21,7 +21,7 @@ router.post("/register", validRegisterRequest, async (req, res) => {
   credentials.password = hash
   try {
     const newUser = await Auth.addUser(credentials)
-    if (newUser.length > 0) {
+    if (newUser) {
       const mailOptions = {
         from: 'communityconcernsapp@gmail.com',
         to: credentials.email,
