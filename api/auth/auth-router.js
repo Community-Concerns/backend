@@ -40,7 +40,7 @@ router.post("/register", validRegisterRequest, async (req, res) => {
     }
     res.status(201).json(newUser)
   } catch (error) {
-    res.status(500).json(error.message)
+    res.status(500).json(error)
   }
 })
 
