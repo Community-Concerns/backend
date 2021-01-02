@@ -1,4 +1,4 @@
-const pgConnection = process.env.DATABASE_URL || "postgres://postgres@localhost/database/community-concerns"
+const pgConnection = process.env.DATABASE_URL
 
 module.exports = {
 
