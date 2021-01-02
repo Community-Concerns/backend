@@ -5,14 +5,6 @@ const Auth = require("./auth-model")
 const { makeToken } = require("./auth-helpers")
 const { validRegisterRequest } = require("../middleware")
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_ADDRESS,
-    pass: process.env.GMAIL_PASSWORD
-  }
-});
-
 
 router.post("/register", validRegisterRequest, async (req, res) => {
   const credentials = req.body
@@ -22,6 +14,14 @@ router.post("/register", validRegisterRequest, async (req, res) => {
   try {
     const newUser = await Auth.addUser(credentials)
     if(newUser) {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_ADDRESS,
+          pass: process.env.GMAIL_PASSWORD
+        }
+      });
+      
       const mailOptions = {
         from: 'communityconcernsapp@gmail.com',
         to: credentials.email,

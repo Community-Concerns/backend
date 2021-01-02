@@ -4,7 +4,7 @@ Node / Express / Knex
 ENDPOINTS
 Login/Register endpoints
 ----------------------------------
-API hosted at: //add url
+API hosted at: https://community-concerns.herokuapp.com/
 ### User Endpoints 
 | Method | Endpoint           | Description                             | Requirements
 | ------ | ------------------ | ----------------------------------------|--------------------------------------
@@ -16,7 +16,7 @@ API hosted at: //add url
 # ALL LOGGED IN ENDPOINTS REQUESTS MUST INCLUDE JSON TOKEN RECIEVED DURING LOGIN IN HEADER AS PROPERTY authorization
 Tickets CRUD
 ------------------------
-API hosted at: 
+API hosted at: https://community-concerns.herokuapp.com/
 ### Ticket Endpoints 
 | Method | Endpoint                | Description                        | Requirements
 | ------ | ----------------------  | -----------------------------------|-------------------
@@ -28,7 +28,7 @@ API hosted at:
 
 Comments CRUD
 ------------------------
-API hosted at: 
+API hosted at: https://community-concerns.herokuapp.com/
 ### Comments Endpoints 
 | Method | Endpoint                 | Description                       | Requirements
 | ------ | ----------------------   | ----------------------------------|-------------------
@@ -39,7 +39,7 @@ API hosted at:
 
 Upvotes CRUD
 ------------------------
-API hosted at: 
+API hosted at: https://community-concerns.herokuapp.com/
 ### Upvotes Endpoints 
 | Method | Endpoint                      | Description                                 | Requirements
 | ------ | ---------------------------   | --------------------------------------------|-------------------
