@@ -18,13 +18,9 @@ router.post("/register", validRegisterRequest, async (req, res) => {
   const rounds = 10
   const hash = bcryptjs.hashSync(credentials.password, rounds)
   credentials.password = hash
-  console.log("Addess", process.env.GMAIL_ADDRESS)
-  console.log("Password", process.env.GMAIL_PASSWORD)
-  console.log("Something", transporter)
-  console.log("Function", transporter.sendMail)
   try {
     const newUser = await Auth.addUser(credentials)
-    if (newUser) {
+    if (newUser.length > 0) {
       const mailOptions = {
         from: 'communityconcernsapp@gmail.com',
         to: credentials.email,
