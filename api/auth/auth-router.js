@@ -5,6 +5,13 @@ const Auth = require("./auth-model")
 const { makeToken } = require("./auth-helpers")
 const { validRegisterRequest } = require("../middleware")
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_ADDRESS,
+    pass: process.env.GMAIL_PASSWORD
+  }
+});
 
 router.post("/register", validRegisterRequest, async (req, res) => {
   const credentials = req.body
@@ -14,22 +21,14 @@ router.post("/register", validRegisterRequest, async (req, res) => {
   try {
     const newUser = await Auth.addUser(credentials)
     if(newUser) {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.GMAIL_ADDRESS,
-          pass: process.env.GMAIL_PASSWORD
-        }
-      });
-      
       const mailOptions = {
         from: 'communityconcernsapp@gmail.com',
         to: credentials.email,
-        subject: 'Sending Email using Node.js',
-        html: '<h1>Welcome to Community Concerns to log in please <a href="https://redsox.com">Click Here</a></h1>'
+        subject: 'Thank You For Registering With Community Concerns',
+        html: '<h1>Welcome to Community Concerns to log in please Click Here</a></h1>'
       };
       
-      transporter.sendMail(mailOptions, function(error, info){
+      transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           console.log(error);
         } else {
