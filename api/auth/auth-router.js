@@ -21,6 +21,8 @@ router.post("/register", validRegisterRequest, async (req, res) => {
   try {
     const newUser = await Auth.addUser(credentials)
     if(newUser) {
+      console.log(transporter)
+      console.log(transporter.sendMail)
       const mailOptions = {
         from: 'communityconcernsapp@gmail.com',
         to: credentials.email,
