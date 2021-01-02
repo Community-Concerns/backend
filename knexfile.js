@@ -1,4 +1,4 @@
-const pgConnection = process.eventNames.DATABASE_URL || "postgres://ynjyltyccovkyi:3785652e74fe7d63922e0a6145582f6f5727bffc509cb02057e8627988562807@ec2-3-232-240-231.compute-1.amazonaws.com:5432/ddh3n7doh09lgv"
+const pgConnection = process.eventNames.DATABASE_URL || "postgres://postgres@localhost/database/community-concerns"
 
 module.exports = {
 
@@ -36,7 +36,7 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
+    client: 'pg',
     connection: pgConnection,
     pool: {
       min: 2,
