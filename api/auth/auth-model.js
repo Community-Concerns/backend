@@ -4,10 +4,9 @@ function getUserByEmail(email) {
   return db("users").where({ email })
 }
 
-function addUser(user) {
-  return db("users").insert(user).then(([id]) => {
-    return db("users").where({ id })
-  })
+async function addUser(user) {
+  const [id] = await db("users").insert(user)
+  return db("users").where({ id: id })
 }
 
 module.exports = {
