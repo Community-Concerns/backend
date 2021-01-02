@@ -4,6 +4,7 @@ const nodemailer = require("nodemailer")
 const Auth = require("./auth-model")
 const { makeToken } = require("./auth-helpers")
 const { validRegisterRequest } = require("../middleware")
+const e = require("express")
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -40,7 +41,7 @@ router.post("/register", validRegisterRequest, async (req, res) => {
     }
     res.status(201).json(newUser)
   } catch (error) {
-    res.status(500).json({ error: error })
+    res.status(500).json({ error: error.lineNumber, message: error.message, stack: error.stack })
   }
 })
 
