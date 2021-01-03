@@ -10,7 +10,7 @@ API hosted at: https://community-concerns.herokuapp.com/
 | ------ | ------------------ | ----------------------------------------|--------------------------------------
 | POST   | /api/auth/register | Allows users to register an account     | email, username, zipcode, password
 | POST   | /api/auth/login    | Logs in user and sends JSON token       | email, password
-| DELETE | /api/auth/:id      | Delete a users account                  | Endpoint includes the users id
+| DELETE | /api/auth/:id      | Delete a users account                  | url includes the users id
  
 
 # ALL LOGGED IN ENDPOINTS REQUESTS MUST INCLUDE JSON TOKEN RECIEVED DURING LOGIN IN HEADER AS PROPERTY authorization

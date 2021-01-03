@@ -10,9 +10,8 @@ function getUserUpvotes(user_id) {
 
 async function addUpvote(upvote) {
   try {
-    const id = await db("ticket_upvotes").insert(upvote)
-    const newUpvote = await db("ticket_upvotes").where({ id }).first()
-    return newUpvote
+    const [id] = await db("ticket_upvotes").insert(upvote, "id")
+    return await db("ticket_upvotes").where({ id: id }).first()
   } catch (error) {
     console.log(error.message)
   } 

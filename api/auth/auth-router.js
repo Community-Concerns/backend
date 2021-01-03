@@ -4,7 +4,7 @@ const nodemailer = require("nodemailer")
 const Auth = require("./auth-model")
 const { makeToken } = require("./auth-helpers")
 const { validRegisterRequest } = require("../middleware")
-const e = require("express")
+const { isAuthorized } = require("../middleware")
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -62,6 +62,16 @@ router.post("/login", async (req, res) => {
       res.status(401).json("invalid credentials")
     }
   }
+})
+
+router.delete("/:id", isAuthorized, async (req, res) => {
+  const { id } = req.params
+  Auth.deleteUser().then((res) => {
+    res.status(200).json(res)
+  })
+  .catch(err => {
+    res.status(500).json({ message: err.message})
+  })
 })
 
 module.exports = router
