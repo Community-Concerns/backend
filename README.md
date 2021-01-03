@@ -22,7 +22,7 @@ API hosted at: https://community-concerns.herokuapp.com/
 | ------ | ----------------------  | -----------------------------------|-------------------
 | GET    | /api/tickets            | Get all tickets in database        | Valid JSON Token in header of request
 | GET    | /api/tickets/my_tickets | Get the tickets of logged in user  | Valid JSON Token in header of request
-| POST   | /api/tickets            | Add a new ticket                   | title, description, zipcode in body, Valid JSON Token in header of request
+| POST   | /api/tickets            | Add a new ticket                   | title, description, zipcode in body, (image can also be included in body but not required) Valid JSON Token in header of request
 | PUT    | /api/tickets/:id        | Update a ticket                    | any changes in body, ticket ID in request url, Valid JSON Token in header of request
 | DELETE | /api/tickets/:id        | Delete an ticket                   | id of ticket to be deleted in URL, Valid JSOn token in header of request
 
