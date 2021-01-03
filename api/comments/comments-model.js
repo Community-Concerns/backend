@@ -1,6 +1,5 @@
 const db = require("../../database/dbConfig"); 
 
-
 /* Select
     u.username, 
     c.comment
@@ -15,13 +14,12 @@ function getTicketComments(id){
     .where({ticket_id: id})
 }
 
-
 function getCommentById(id){
     return db("comments").where({ id }); 
 }
 
 async function create(comment){
-    const newComment = await db("comments").insert(comment); 
+    const [newComment] = await db("comments").insert(comment, "id"); 
 
     return db("comments as c")
     .join("users", "users.id", "c.user_id")
@@ -30,17 +28,14 @@ async function create(comment){
 }
 
 async function update(changes, id){
-
     await db("comments").where({ id }).update(changes); 
-
-    return db("comments").where({id}).first()
+    return db("comments").where({ id }).first()
 }
 
 
 function remove(id){
     return db("comments").where({ id }).del(); 
 }
-
 
 module.exports = {
     getTicketComments, 

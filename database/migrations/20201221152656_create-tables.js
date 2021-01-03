@@ -31,7 +31,6 @@ exports.up = function(knex) {
     .notNullable()
     .references("id")
     .inTable("tickets");
-    
   })
   .createTable("comments", tbl => {
     tbl.increments("id"); 
@@ -48,21 +47,10 @@ exports.up = function(knex) {
     .references("id")
     .inTable("users");
   })
-  .createTable("ticket_images", tbl => {
-    tbl.increments("id"); 
-    tbl.integer("ticket_id")
-    .unsigned()
-    .notNullable()
-    .references("id")
-    .inTable("tickets");
-    tbl.string("image_url", 255).notNullable(); 
-    tbl.string("public_id", 255).notNullable(); 
-  })
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists("ticket_images")
-  .dropTableIfExists("comments")
+  return knex.schema.dropTableIfExists("comments")
   .dropTableIfExists("ticket_upvotes")
   .dropTableIfExists("tickets")
   .dropTableIfExists("users")
