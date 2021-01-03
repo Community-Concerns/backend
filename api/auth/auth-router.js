@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
 
 router.delete("/:id", isAuthorized, async (req, res) => {
   const { id } = req.params
-  const deleted = await deleteUser(id)
+  const deleted = await Auth.deleteUser(id)
   if(deleted > 0) {
     res.status(200).json({ message: "User deleted" })
   } else {
