@@ -5,6 +5,7 @@ const Auth = require("./auth-model")
 const { makeToken } = require("./auth-helpers")
 const { validRegisterRequest } = require("../middleware")
 const { isAuthorized } = require("../middleware")
+const { json } = require("express")
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -66,12 +67,12 @@ router.post("/login", async (req, res) => {
 
 router.delete("/:id", isAuthorized, async (req, res) => {
   const { id } = req.params
-  Auth.deleteUser(id).then((data) => {
-    res.status(200).json(data)
-  })
-  .catch(err => {
-    res.status(500).json({ message: err.message})
-  })
+  const deleted = await deleteUser(id)
+  if(deleted > 0) {
+    res.status(200).json({ message: "User deleted" })
+  } else {
+    res.status(500).json({ message: "Failed to delete user" })
+  }
 })
 
 module.exports = router
