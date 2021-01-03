@@ -5,7 +5,7 @@ function getUserByEmail(email) {
 }
 
 function addUser(user) {
-  return db("users").insert(user)
+  return db("users").insert(user, "id")
 }
 
 module.exports = {
