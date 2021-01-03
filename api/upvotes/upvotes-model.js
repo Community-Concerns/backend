@@ -4,6 +4,10 @@ function getUpvotes() {
   return db("ticket_upvotes")
 }
 
+function getUpvote(id) {
+  return db("ticket_upvotes").where({ id: id })
+}
+
 function getUserUpvotes(user_id) {
   return db("ticket_upvotes").where({ user_id })
 }
@@ -19,8 +23,7 @@ async function addUpvote(upvote) {
 
 async function deleteUpvote(id) {
   try {
-    const count = await db("ticket_upvotes").where({ id }).delete()
-    return count
+    return db("ticket_upvotes").where({ id: id }).delete()
   } catch (error) {
     console.log(error.message)
   } 
@@ -34,6 +37,7 @@ module.exports = {
   addUpvote,
   deleteUpvote,
   getUpvotes,
+  getUpvote,
   getUserUpvotes,
   getUpvoteWithUserAndTicketId
 }
