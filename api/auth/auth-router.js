@@ -66,7 +66,7 @@ router.post("/login", async (req, res) => {
 
 router.delete("/:id", isAuthorized, async (req, res) => {
   const { id } = req.params
-  Auth.deleteUser().then((res) => {
+  Auth.deleteUser(id).then((res) => {
     res.status(200).json(res)
   })
   .catch(err => {
