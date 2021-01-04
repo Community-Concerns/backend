@@ -5,7 +5,6 @@ const Auth = require("./auth-model")
 const { makeToken } = require("./auth-helpers")
 const { validRegisterRequest } = require("../middleware")
 const { isAuthorized } = require("../middleware")
-const { json } = require("express")
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -23,20 +22,20 @@ router.post("/register", validRegisterRequest, async (req, res) => {
   try {
     const newUser = await Auth.addUser(credentials)
     if (newUser) {
-      const mailOptions = {
-        from: 'communityconcernsapp@gmail.com',
-        to: credentials.email,
-        subject: 'Thank You For Registering With Community Concerns',
-        html: '<h1>Welcome to Community Concerns to log in please Click Here</a></h1>'
-      }
+      // const mailOptions = {
+      //   from: 'communityconcernsapp@gmail.com',
+      //   to: credentials.email,
+      //   subject: 'Thank You For Registering With Community Concerns',
+      //   html: '<h1>Welcome to Community Concerns to log in please Click Here</a></h1>'
+      // }
       
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.log(error)
-        } else {
-          console.log(`Email sent: ${info.response}`)
-        }
-      })
+      // transporter.sendMail(mailOptions, (error, info) => {
+      //   if (error) {
+      //     console.log(error)
+      //   } else {
+      //     console.log(`Email sent: ${info.response}`)
+      //   }
+      // })
       res.status(201).json(newUser)
     } else {
       res.status(500).json("Unable to add user")
