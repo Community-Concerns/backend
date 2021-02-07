@@ -56,7 +56,9 @@ router.post("/login", async (req, res) => {
       const token = makeToken(user)
       
       res.status(200).json({
-        message: `welcome, ${user.username}`,
+        email: user.email,
+        username: user.username,
+        zipcode: user.zipcode,
         token
       })
     } else {
