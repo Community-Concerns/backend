@@ -59,6 +59,7 @@ router.post("/login", async (req, res) => {
         email: user.email,
         username: user.username,
         zipcode: user.zipcode,
+        userId: user.id,
         token
       })
     } else {
